@@ -1,0 +1,9 @@
+{
+  "welcome": "Selamat datang",
+  "menu": {
+    "home": "Beranda",
+    "features": "Fitur",
+    "internalization": "Internalisasi",
+    "docs": "Dokumentasi"
+  }
+}
