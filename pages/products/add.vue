@@ -106,6 +106,7 @@ const onChange = (val: FileValue) => {
           <VBtn color="danger" @click="imageUrl = null">Delete</VBtn>
         </div>
         <div v-else>
+          {{ productStore.form }}
           <VFileUpload ref="fileInput" theme="image" name="image" full @change="onChange" />
         </div>
         <div class="grid grid-cols-2 gap-4 my-6">
