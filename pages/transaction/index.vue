@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import type { VDataTableHeader } from '@morpheme/table'
 import { useMenuStore } from "~/stores/menu"
-import { ref } from 'vue'
+import { breakpointsTailwind } from '@vueuse/core'
 
+const breakpoints = useBreakpoints(breakpointsTailwind)
+const isMobile = breakpoints.smaller('sm')
 const menuStore = useMenuStore()
 const selectedTab = ref(0)
+
 const items = ref([
   {
     text: 'Pending',
@@ -17,17 +20,8 @@ const items = ref([
   },
 ])
 
-definePageMeta({
-  breadcrumbs: [
-    {
-      title: 'Transaction',
-      to: '/transaction'
-    },
-  ]
-})
-
 const headers = ref<VDataTableHeader[]>([
-
+  
   {
     value: 'ordernumber',
     text: 'Order Number',
@@ -51,8 +45,13 @@ const headers = ref<VDataTableHeader[]>([
   },
 ])
 
+definePageMeta({
+  breadcrumbs: [{ title: 'Transaction', to: '/transaction' }]
+})
 onMounted(() => {
-  menuStore.isAsideOpen = false
+  if(isMobile.value){
+    menuStore.isAsideOpen = false
+  }
 })
 </script>
 

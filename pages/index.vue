@@ -1,10 +1,18 @@
 <script setup lang="ts">
+import { breakpointsTailwind } from '@vueuse/core'
 import { useMenuStore } from "~/stores/menu"
 
+const breakpoints = useBreakpoints(breakpointsTailwind)
+const isMobile = breakpoints.smaller('sm')
+console.log(isMobile)
 const menuStore = useMenuStore()
-onMounted(() => {
- menuStore.isAsideOpen = false
+
+onMounted(()=> {
+  if(isMobile.value){
+    menuStore.isAsideOpen = false
+  }
 })
+
 </script>
 
 <template>

@@ -3,9 +3,16 @@ import type { VDataTableHeader } from "@morpheme/table"
 import { useProductStore } from "~/stores/productStore"
 import { useMenuStore } from "~/stores/menu"
 import { ProductType } from "~/type";
+import { breakpointsTailwind } from '@vueuse/core'
 
+const breakpoints = useBreakpoints(breakpointsTailwind)
+const isMobile = breakpoints.smaller('sm')
 const productStore = useProductStore()
 const menuStore = useMenuStore()
+const productDetail = ref<ProductType[]>([])
+const isDeleteConfirmationOpen = ref(false)
+const isProductModalOpen = ref(false)
+const productIdToDelete = ref<number>(0)
 const headers = ref<VDataTableHeader[]>([
   {
     value: "image",
@@ -31,27 +38,13 @@ const headers = ref<VDataTableHeader[]>([
   },
 ])
 
-definePageMeta({
-  breadcrumbs: [
-    {
-      title: 'Products',
-      to: '/products'
-    },
 
-  ]
-})
 
-const productDetail = ref<ProductType[]>([])
-const detailProduct = (id: number): void => {
+function detailProduct (id: number){
   isProductModalOpen.value = true
   productDetail.value = productStore.getProductById(id)
-  console.log(productDetail)
 }
 
-
-const isDeleteConfirmationOpen = ref(false)
-const isProductModalOpen = ref(false)
-const productIdToDelete = ref<number>(0)
 
 function openModal(id: number) {
   console.log(id)
@@ -68,13 +61,20 @@ function onDeleteConfirmation(id: number) {
 }
 
 onMounted(async () => {
-  menuStore.isAsideOpen = false
+  if(isMobile.value){
+    menuStore.isAsideOpen = false
+  }
   await productStore.getProducts()
 })
 
 watch(() => productStore.searchValue, () => {
   productStore.getProductByTitle
 })
+
+definePageMeta({
+  breadcrumbs: [{title: 'Products', to: '/products'}]
+})
+
 </script>
 
 <template>

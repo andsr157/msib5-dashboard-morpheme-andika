@@ -11,6 +11,8 @@ const isMobile = breakpoints.smaller('sm')
 watchEffect(() => {
   menuStore.isAsideOpen = !isMobile.value
 })
+
+
 </script>
 
 <template>
