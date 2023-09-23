@@ -27,12 +27,14 @@ const items = ref<VSelectItem[]>([
   },
 ])
 
-const productData = productStore.getProductById(Number(useRoute().params.id))
-// onMounted(async () => {
-//   await productStore.getProducts()
-//   await productStore.getAllProducts
-
-// })
+const productData =computed(() => productStore.getProductById(Number(useRoute().params.id)) ) 
+onMounted(async () => {
+    await productStore.getProducts();
+    if (productData.value !== null) {
+      productStore.fillEditFrom(productData.value);
+    }
+ 
+})
 
 definePageMeta({
   breadcrumbs: [
@@ -51,7 +53,6 @@ const schema = object({
   title: string().required().label("name"),
   price: number().required().label("price"),
   category: string().required().label("category"),
-  description: string().required().label("description"),
 })
 
 const { handleSubmit } = useForm({
@@ -59,7 +60,6 @@ const { handleSubmit } = useForm({
 })
 
 const onSubmit = handleSubmit((values) => {
-  console.log('click')
   productStore.editProduct(Number(id))
 });
 export type FileValue =
@@ -77,7 +77,7 @@ const onChange = (val: FileValue) => {
   } else if (val === null || typeof val === 'string') {
     imageUrl.value = val;
   }
-  console.log(imageUrl)
+
 };
 </script>
 
@@ -87,6 +87,22 @@ const onChange = (val: FileValue) => {
     <p class="text-gray-500">Edit your products here</p>
   </div>
   <ClientOnly>
+    <template #fallback>
+      <VCard>
+        <div class="flex flex-col gap-3">
+          <VShimmer width="100%" height="130px"/>
+          <div class="grid grid-cols-2 gap-4">
+            <VShimmer width="100%" height="56px"/>
+            <VShimmer width="100%" height="56px"/>
+          </div>
+          <VShimmer width="100%" height="56px"/>
+          <VShimmer width="100%" height="86px"/>
+          <VShimmer width="79px" height="44px"/>
+          
+        </div>
+      </VCard>
+    </template>
+
     <VCard class=" mx-auto">
       <form @submit="onSubmit">
 
@@ -97,7 +113,6 @@ const onChange = (val: FileValue) => {
         <div v-else>
           <VFileUpload ref="fileInput" theme="image" name="image" full @change="onChange"  />
         </div>
-        {{ productStore.form }}
         <div class="grid grid-cols-2 gap-4 my-6">
           <VInput v-model="productStore.form.title" label="Name" name="title" :value="productData?.title" />
           <VInput v-model="productStore.form.price" label="Price" name="price" type="number"

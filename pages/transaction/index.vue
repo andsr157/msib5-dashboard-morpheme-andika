@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { VDataTableHeader } from '@morpheme/table'
-
+import { useMenuStore } from "~/stores/menu"
 import { ref } from 'vue'
 
+const menuStore = useMenuStore()
 const selectedTab = ref(0)
 const items = ref([
   {
@@ -49,6 +50,10 @@ const headers = ref<VDataTableHeader[]>([
     sortable: false,
   },
 ])
+
+onMounted(() => {
+  menuStore.isAsideOpen = false
+})
 </script>
 
 <template>

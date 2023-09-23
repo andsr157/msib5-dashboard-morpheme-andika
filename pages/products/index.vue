@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import type { VDataTableHeader } from "@morpheme/table"
 import { useProductStore } from "~/stores/productStore"
+import { useMenuStore } from "~/stores/menu"
 import { ProductType } from "~/type";
 
 const productStore = useProductStore()
+const menuStore = useMenuStore()
 const headers = ref<VDataTableHeader[]>([
   {
     value: "image",
@@ -66,6 +68,7 @@ function onDeleteConfirmation(id: number) {
 }
 
 onMounted(async () => {
+  menuStore.isAsideOpen = false
   await productStore.getProducts()
 })
 
@@ -81,8 +84,8 @@ watch(() => productStore.searchValue, () => {
   </div>
 
   <VCard shadow="md" class="mt-4">
-    <div class="flex justify-between mb-6">
-      <VInput v-model="productStore.searchValue" prepend-icon="ri:search-line" placeholder="Search..." />
+    <div class="flex gap-3 lg:justify-between mb-6">
+      <VInput v-model="productStore.searchValue" prepend-icon="ri:search-line" placeholder="Search..." class="w-full"/>
       <NuxtLink to="/products/add">
         <VBtn prefix-icon="ri:add-fill" color="primary">
           Tambah

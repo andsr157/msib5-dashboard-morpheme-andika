@@ -2,30 +2,29 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import axios from 'axios'
 
-import type { FormType, ProductType ,stateProduct}  from '~/type'
+import type { FormType, ProductType, stateProduct } from '~/type'
 
 export const useProductStore = defineStore('Products', {
-  state: ():stateProduct => ({
-    initialproducts: [] ,
+  state: (): stateProduct => ({
+    initialproducts: [],
     constantproducts: [],
-    products:[],
+    products: [],
     searchValue: ref(''),
     categoryValue: ref([]),
     isLoading: true,
-    form: ref({ 
+    form: ref({
       title: '',
       price: 0,
       description: '',
-      thumbnail:'https://picsum.photos/id/237/200/300',
-      category:''
+      thumbnail: 'https://picsum.photos/id/237/200/300',
+      category: ''
     }),
   }),
 
   getters: {
     getAllProducts: (state) => {
-      if (state.products?.length === 0){
+      if (state.products?.length === 0) {
         state.products = [...state.initialproducts, ...(state.products || [])]
-        state
         return state.products
       }
       return state.products
@@ -42,13 +41,14 @@ export const useProductStore = defineStore('Products', {
           return product.includes(state.searchValue.toLowerCase())
         })
         state.products = filtered
-        console.log(state.products)
       }
     },
 
 
     getProductById: state => (id: number) => {
-      console.log(id)
+      if (state.products?.length === 0) {
+        state.products = [...state.initialproducts, ...(state.products || [])]
+      }
       const product = state.products.find(data => data.id === id)
       return product || null
     },
@@ -59,8 +59,8 @@ export const useProductStore = defineStore('Products', {
       try {
         this.isLoading = true
         const response = await axios.get('https://dummyjson.com/products')
-        this.initialproducts = response.data.products 
-      
+        this.initialproducts = response.data.products
+
       }
       catch (error) {
         console.error('Error fetching products:', error)
@@ -79,36 +79,58 @@ export const useProductStore = defineStore('Products', {
         title: '',
         price: 0,
         description: '',
-        thumbnail:'https://picsum.photos/id/237/200/300',
-        category:''
+        thumbnail: 'https://picsum.photos/id/237/200/300',
+        category: ''
       }
       this.constantproducts = this.products
       const router = useRouter();
-      router.push('/products'); 
+      router.push('/products');
       window.alert('tambah berhasil')
     },
 
     deleteProduct(id: number): void {
       this.products = this.products.filter(item => item.id !== id)
     },
-    
-    editProduct(id:number):void{
-     const productIndex = this.products.findIndex((product) => { product.id === id })
-     console.log(productIndex)
-      if(productIndex !==1 ){
-        this.products[productIndex] = {...this.products[productIndex], ...this.form}
+
+    editProduct(id: number): void {
+     
+      const productIndex = this.products.findIndex((product) =>  product.id === id )
+      
+      if (productIndex !== -1) {
+        this.products[productIndex] = { ...this.products[productIndex], ...this.form }
+        this.constantproducts = this.products
       }
       this.form = {
         title: '',
         price: 0,
         description: '',
-        thumbnail:'https://picsum.photos/id/237/200/300',
-        category:''
+        thumbnail: 'https://picsum.photos/id/237/200/300',
+        category: ''
       }
       const router = useRouter();
-      router.push('/products'); 
+      router.push('/products');
       window.alert('Edit Behasil')
-    }   
+    },
+
+    fillEditFrom(data:ProductType):void {
+      this.form = {
+        title:data.title,
+        price:data.price,
+        description:data.description,
+        thumbnail: 'https://picsum.photos/id/237/200/300',
+        category:data.category
+      }
+    },
+
+    resetForm(){
+      this.form = {
+        title:'',
+        price:0,
+        description:'',
+        thumbnail: 'https://picsum.photos/id/237/200/300',
+        category:''
+      }
+    }
 
   },
 })

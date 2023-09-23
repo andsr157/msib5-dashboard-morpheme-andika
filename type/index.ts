@@ -26,9 +26,9 @@ export interface ProductType {
 export interface FormType {
   title: string
   price: number
-  description: string
+  description?: string
   thumbnail:string
-  category:string
+  category?:string
 }
 
 export interface stateProduct {
