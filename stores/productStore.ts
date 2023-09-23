@@ -7,7 +7,8 @@ import type { FormType, ProductType ,stateProduct}  from '~/type'
 export const useProductStore = defineStore('Products', {
   state: ():stateProduct => ({
     initialproducts: [] ,
-    products: [],
+    constantproducts: [],
+    products:[],
     searchValue: ref(''),
     categoryValue: ref([]),
     isLoading: true,
@@ -24,17 +25,19 @@ export const useProductStore = defineStore('Products', {
     getAllProducts: (state) => {
       if (state.products?.length === 0){
         state.products = [...state.initialproducts, ...(state.products || [])]
+        state
         return state.products
       }
       return state.products
     },
 
     getProductByTitle: (state): void => {
+
       if (state.searchValue === '') {
-        state.products = state.initialproducts
+        state.products = state.constantproducts
       }
       else {
-        const filtered = state.initialproducts.filter((item) => {
+        const filtered = state.products.filter((item) => {
           const product = item.title.toLowerCase()
           return product.includes(state.searchValue.toLowerCase())
         })
@@ -57,7 +60,6 @@ export const useProductStore = defineStore('Products', {
         this.isLoading = true
         const response = await axios.get('https://dummyjson.com/products')
         this.initialproducts = response.data.products 
-        this.products = response.data.products
       
       }
       catch (error) {
@@ -80,6 +82,7 @@ export const useProductStore = defineStore('Products', {
         thumbnail:'https://picsum.photos/id/237/200/300',
         category:''
       }
+      this.constantproducts = this.products
       const router = useRouter();
       router.push('/products'); 
       window.alert('tambah berhasil')
@@ -95,7 +98,6 @@ export const useProductStore = defineStore('Products', {
       if(productIndex !==1 ){
         this.products[productIndex] = {...this.products[productIndex], ...this.form}
       }
-
       this.form = {
         title: '',
         price: 0,

@@ -33,6 +33,7 @@ export interface FormType {
 
 export interface stateProduct {
   initialproducts:ProductType[]
+  constantproducts:ProductType[]
   products:ProductType[]
   searchValue: Ref<string>
   categoryValue: Ref<string[]>

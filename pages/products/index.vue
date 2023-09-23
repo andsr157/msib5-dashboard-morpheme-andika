@@ -89,7 +89,7 @@ watch(() => productStore.searchValue, () => {
         </VBtn>
       </NuxtLink>
     </div>
-    <VDataTable :items="productStore.products" :headers="headers" :loading="productStore.isLoading">
+    <VDataTable :items="productStore.getAllProducts" :headers="headers" :loading="productStore.isLoading">
       <template #item.image="{ item }">
         <div class="rounded w-12 h-12">
           <img :src="item.thumbnail" class="w-full h-full object-cover" alt="" />
