@@ -87,7 +87,7 @@ definePageMeta({
     <div class="flex gap-3 lg:justify-between mb-6">
       <VInput v-model="productStore.searchValue" prepend-icon="ri:search-line" placeholder="Search..." class="w-full"/>
       <NuxtLink to="/products/add">
-        <VBtn prefix-icon="ri:add-fill" color="primary">
+        <VBtn prefix-icon="ri:add-fill" color="purple-heart" >
           Tambah
         </VBtn>
       </NuxtLink>
