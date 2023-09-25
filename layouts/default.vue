@@ -10,6 +10,9 @@ const isMobile = breakpoints.smaller('sm')
 
 watchEffect(() => {
   menuStore.isAsideOpen = !isMobile.value
+  if(isMobile){
+    menuStore.isMini = !isMobile
+  }
 })
 
 
@@ -30,7 +33,7 @@ watchEffect(() => {
         v-model="menuStore.isAsideOpen"
         v-model:mini="menuStore.isMini"
         sticky
-        color="primary"
+        color="purple-heart"
         :fixed="isMobile"
         :overlay="isMobile"
         :close-on-overlay-click="isMobile"

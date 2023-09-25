@@ -66,7 +66,7 @@ onMounted(() => {
   </div>
 
   <VCard>
-    <VTabs v-model="selectedTab" :items="items" />
+    <VTabs v-model="selectedTab" :items="items" color="purple-heart" />
 
     <div class="mt-4 px-2">
       <div v-if="selectedTab === 0">

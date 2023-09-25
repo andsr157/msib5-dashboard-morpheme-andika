@@ -17,13 +17,13 @@ function confirmDetail(id: number) {
 
 <template>
   <div class="flex justify-center gap-4">
-    <VBtn icon fab @click="confirmDetail(id)">
+    <VBtn icon fab @click="confirmDetail(id)" color="detail">
       <VIcon name="ri:eye-line" />
     </VBtn>
-      <VBtn icon fab :to="`/products/edit/${id}`">
+      <VBtn icon fab :to="`/products/edit/${id}`" color="edit">
         <VIcon name="ri:pencil-line" />
       </VBtn>
-    <VBtn icon fab @click="confirmDelete(id)">
+    <VBtn icon fab @click="confirmDelete(id)" color="delete">
       <VIcon name="ri:delete-bin-line" />
     </VBtn>
   </div>

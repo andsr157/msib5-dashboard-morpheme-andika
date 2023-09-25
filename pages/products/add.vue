@@ -7,7 +7,6 @@ import { VQuillEditor } from "@morpheme/quill-editor"
 import VEditor from "@morpheme/editor"
 
 const productStore = useProductStore()
-
 const value = ref('')
 const imageUrl = ref<any>(null)
 const fileInput = ref(null);
@@ -43,7 +42,7 @@ const schema = object({
   title: string().required().label("name"),
   price: number().required().label("price"),
   category: string().required().label("category"),
-  desc: string().required().label("description"),
+  description: string().required().label("description"),
 })
 
 const { handleSubmit } = useForm({
@@ -54,6 +53,7 @@ const onSubmit = handleSubmit((values) => {
   console.log('click')
   productStore.addProduct()
 });
+
 export type FileValue =
   | string
   | Record<string, any>
@@ -75,6 +75,7 @@ const onChange = (val: FileValue) => {
 onMounted(() => {
   productStore.resetForm()
 })
+
 </script>
 
 <template>
@@ -103,11 +104,11 @@ onMounted(() => {
       </VCard>
     </template>
     <VCard class="mx-auto">
+      <!-- <pre>{{ productStore.form }}</pre> -->
       <form @submit="onSubmit">
-
         <div v-if="imageUrl !== null">
-          <img :src="imageUrl" class=" w-full h-72 object-cover">
-          <VBtn color="danger" @click="imageUrl = null">Delete</VBtn>
+          <img :src="imageUrl" class=" w-full h-72 object-cover mb-2">
+          <VBtn color="error" outlined @click="imageUrl = null">Delete</VBtn>
         </div>
         <div v-else>
           
@@ -118,8 +119,8 @@ onMounted(() => {
           <VInput v-model="productStore.form.price" label="Price" name="price" type="number" />
         </div>
         <VSelect v-model="productStore.form.category" :items="items" label="Category" name="category" class="mb-6" />
-        <VEditor name="desc" v-model="productStore.form.description" />
-        <VBtn type="submit" class="mt-6"> Submit </VBtn>
+        <VEditor name="description" v-model="productStore.form.description"/>
+        <VBtn type="submit" color="purple-heart" class="mt-6"> Submit </VBtn>
       </form>
     </VCard>
   </ClientOnly>
@@ -128,7 +129,7 @@ onMounted(() => {
 <style>
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
+  -webkit-appearance: none; 
   margin: 0;
 }
 

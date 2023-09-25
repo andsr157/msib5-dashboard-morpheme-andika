@@ -29,6 +29,10 @@ const secondary = {
   900: '#682600',
 }
 
+
+
+
+
 module.exports = {
   darkMode: 'class',
   content: ['./node_modules/@morpheme/**/src/**/*.{vue,js,ts,jsx,tsx}'],
