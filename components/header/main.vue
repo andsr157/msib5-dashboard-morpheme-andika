@@ -8,7 +8,7 @@ const menuStore = useMenuStore()
    
     <VLogo size="sm" />
     <VBtn
-    color="primary"
+    color="purple-heart"
       class="px-2 py-1 rounded-lg"
       @click="menuStore.isAsideOpen = !menuStore.isAsideOpen"
     >
