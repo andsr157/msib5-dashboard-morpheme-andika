@@ -49,8 +49,4 @@ watchEffect(() => {
   </VAppShell>
 </template>
 
-<style>
-.v-list .router-link-exact-active {
-  background-color: #0984dd;
-}
-</style>
+

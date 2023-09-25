@@ -52,7 +52,7 @@ body {
 .nav-drawer-purple-heart{
   --nav-drawer-bg-color:var(--purple-heart-500)
 }
-.v-list>.router-link-exact-active{
+.v-list .router-link-exact-active{
   background-color:var(--purple-heart-800)
 }
 .btn-purple-heart{
